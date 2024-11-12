@@ -29,7 +29,7 @@ class Zombie:
                 Zombie.images[name] = [load_image("./zombie/"+ name + " (%d)" % i + ".png") for i in range(1, 11)]
 
     def __init__(self):
-        self.x, self.y = random.randint(1600-800, 1600), 250
+        self.x, self.y = random.randint(1600-800, 1600), 150
         self.load_images()
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1,1])
@@ -49,23 +49,24 @@ class Zombie:
 
     def draw(self):
         if self.dir < 0:
-            Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, (self.y - self.size/2), self.size, self.size)
+            Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, self.size, self.size)
         else:
-            Zombie.images['Walk'][int(self.frame)].draw(self.x, (self.y - self.size/2), self.size, self.size)
+            Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, self.size, self.size)
         draw_rectangle(*self.get_bb())
 
     def get_bb(self):
         # fill here
         return  (self.x - self.size/2 + self.size/5,
-                (self.y - self.size/2) - self.size/2,
+                self.y - self.size/2,
                 self.x + self.size/2 - + self.size/5,
-                (self.y - self.size/2) + self.size/2 - self.size/10)
+                self.y + self.size/2 - self.size/10)
         pass
 
     def handle_collision(self, group, other):
         # fill here
         if group == 'zombie:ball':
             self.size -= 100
+            self.y = self.size / 2 + 50
             if self.size <= 0:
                 game_world.remove_object(self)
         pass

@@ -20,16 +20,6 @@ TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
 FRAMES_PER_ACTION = 8
 
-
-
-
-
-
-
-
-
-
-
 class Idle:
     @staticmethod
     def enter(boy, e):
@@ -62,8 +52,6 @@ class Idle:
     def draw(boy):
         boy.image.clip_draw(int(boy.frame) * 100, boy.action * 100, 100, 100, boy.x, boy.y)
 
-
-
 class Sleep:
     @staticmethod
     def enter(boy, e):
@@ -90,7 +78,6 @@ class Sleep:
         else:
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100,
                                           -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
-
 
 class Run:
     @staticmethod
@@ -119,10 +106,6 @@ class Run:
     @staticmethod
     def draw(boy):
         boy.image.clip_draw(int(boy.frame) * 100, boy.action * 100, 100, 100, boy.x, boy.y)
-
-
-
-
 
 class Boy:
 
@@ -171,4 +154,7 @@ class Boy:
         # fill here
         if group == 'boy:ball':
             self.ball_count += 1
+        if group == 'boy:zombie':
+            game_framework.quit()
+            pass
         pass
